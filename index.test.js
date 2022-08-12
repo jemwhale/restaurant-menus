@@ -16,7 +16,7 @@ describe('Restaurant and Menu Models', () => {
         await db.sync({ force: true });
     });
 
-    test.only('can create a Restaurant', async () => {
+    test('can create a Restaurant', async () => {
         // TODO - write test
         const newR = await Restaurant.create({
             name: 'hello',
@@ -33,7 +33,7 @@ describe('Restaurant and Menu Models', () => {
             title: 'Crackers'
         })
 
-        expect(newM.name).toEqual('Crackers')
+        expect(newM.title).toEqual('Crackers')
     });
 
     test('can find Restaurants', async () => {
@@ -50,15 +50,15 @@ describe('Restaurant and Menu Models', () => {
         // TODO - write test
         const findM = await Menu.findOne({
             where: {
-                name: 'Crackers'
+                title: 'Crackers'
             }
         })
-        expect(findM.name).toEqual('Crackers')
+        expect(findM.title).toEqual('Crackers')
     });
 
     test('can delete Restaurants', async () => {
         // TODO - write test
-        const destroyR = await Restaurants.destroy({
+        const destroyR = await Restaurant.destroy({
             where: {   
                 location: 'somewhere'
             }
