@@ -16,28 +16,54 @@ describe('Restaurant and Menu Models', () => {
         await db.sync({ force: true });
     });
 
-    test('can create a Restaurant', async () => {
+    test.only('can create a Restaurant', async () => {
         // TODO - write test
-        expect('NO TEST').toEqual('EXPECTED DATA')
+        const newR = await Restaurant.create({
+            name: 'hello',
+            location: 'somewhere',
+            cuisine: 'dry crackers'
+        })
+
+        expect(newR.name).toEqual('hello')
     });
 
     test('can create a Menu', async () => {
         // TODO - write test
-        expect('NO TEST').toEqual('EXPECTED DATA')
+        const newM = await Menu.create({
+            title: 'Crackers'
+        })
+
+        expect(newM.name).toEqual('Crackers')
     });
 
     test('can find Restaurants', async () => {
         // TODO - write test
-        expect('NO TEST').toEqual('EXPECTED DATA')
+        const findR = await Restaurant.findOne({
+            where: {
+                name: 'hello'
+            }
+        })
+        expect(findR.cuisine).toEqual('dry crackers')
     });
 
     test('can find Menus', async () => {
         // TODO - write test
-        expect('NO TEST').toEqual('EXPECTED DATA')
+        const findM = await Menu.findOne({
+            where: {
+                name: 'Crackers'
+            }
+        })
+        expect(findM.name).toEqual('Crackers')
     });
 
     test('can delete Restaurants', async () => {
         // TODO - write test
-        expect('NO TEST').toEqual('EXPECTED DATA')
+        const destroyR = await Restaurants.destroy({
+            where: {   
+                location: 'somewhere'
+            }
+        });
+        const count = await Restaurant.count();
+        expect(count).toEqual(0)
     });
 })
