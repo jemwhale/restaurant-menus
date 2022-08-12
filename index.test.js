@@ -21,7 +21,8 @@ describe('Restaurant and Menu Models', () => {
         const newR = await Restaurant.create({
             name: 'hello',
             location: 'somewhere',
-            cuisine: 'dry crackers'
+            cuisine: 'dry crackers',
+            rating: 10
         })
 
         expect(newR.name).toEqual('hello')
@@ -65,5 +66,42 @@ describe('Restaurant and Menu Models', () => {
         });
         const count = await Restaurant.count();
         expect(count).toEqual(0)
+    });
+    test('can return a positive ratings value no greater than 10 (Restaurant only)', async () => {
+        // TODO - write test
+        const newR1 = await Restaurant.create({
+            name: 'Da Best',
+            location: 'somewhere',
+            cuisine: 'dry crackers',
+            rating: 10
+        })
+        const getRatingR = await Restaurant.findOne({
+            where: {   
+                name: 'Da Best'
+            }
+        });
+        expect(getRatingR.rating).toEqual(10);
+            try{
+            await Restaurant.create({
+            name: 'Da Best',
+            location: 'somewhere',
+            cuisine: 'dry crackers',
+            rating: 1000000000
+        })
+        }catch(err){
+            console.log(err.message)
+            expect(err.message).toEqual('Validation error: Rating needs to be out of 10!')
+        }
+        try{
+            await Restaurant.create({
+            name: 'Da Worst',
+            location: 'somewhere',
+            cuisine: 'dry crackers',
+            rating: -20
+        })
+        }catch(err){
+            console.log(err.message)
+            expect(err.message).toEqual('Validation error: Rating needs to be out of 10!')
+        }
     });
 })
